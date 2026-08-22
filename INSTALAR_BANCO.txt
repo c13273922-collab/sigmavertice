@@ -1,0 +1,88 @@
+# ============================================================
+#   PASSO A PASSO - Como aplicar o Banco de Dados no Supabase
+# ============================================================
+#   Duração: 2 minutos
+# ============================================================
+
+1. Abra seu painel do Supabase:
+   https://supabase.com/dashboard/project/swpoqlgsyfecpdwyjffv/sql/new
+
+   (se pedir login, use sua conta ivanildojunior160698@gmail.com)
+
+2. Na tela que abrir, haverá um editor de SQL grande (quadrado branco).
+
+3. Abra o arquivo:
+   d:\0001\sigmavertice\supabase\migrations\001_schema_principal.sql
+
+   Copie TODO o conteúdo (Ctrl+A → Ctrl+C)
+
+4. Cole TUDO no editor SQL do Supabase (Ctrl+V)
+
+5. Clique no botão "Run" (ou "Executar") no canto inferior direito.
+   👉 Ele vai criar 32 tabelas, triggers, políticas RLS e índices.
+   👉 Aguarde aparecer "Success" em verde.
+
+6. Depois que der sucesso, abra uma NOVA ABA SQL no Supabase:
+   (clica no + acima do editor → "New query")
+
+7. Abra o arquivo:
+   d:\0001\sigmavertice\supabase\seed.sql
+
+   Copie TODO o conteúdo e cole na nova query. Clique em "Run".
+
+   👉 Isso vai inserir: 19 cargos, 34 permissões, 62 municípios do AM,
+      unidades exemplo, configurações do sistema (ADV1 R$700 etc.),
+      comunicados iniciais e notícias de exemplo.
+
+8. PRONTO! BANCO CRIADO! 🎉
+
+---
+
+## CRIAR USUÁRIO DIRETOR GERAL (você mesmo)
+
+1. No menu ESQUERDO do Supabase → clique em "Authentication" (cadeado)
+2. Clique em "Users" → botão verde "Add user" → "Create new user"
+3. Preencha:
+   Email: diretor.geral@sigmavertice.org  (ou seu email preferido)
+   Senha: (crie uma senha forte e anote)
+   ✅ Marque: "Auto confirm user"
+   Clique em "Create user"
+
+4. Copie o ID do usuário (ele aparece na lista Users, uma coluna UID com
+   letras e números tipo "a1b2c3d4-...").
+
+5. Volte no Editor SQL, abra NOVA ABA, cole o SQL abaixo e EXECUTE:
+   (troque SEU_UID_AQUI pelo ID que você copiou)
+
+```sql
+insert into public.funcionarios (
+  id, matricula, nome_completo, email_institucional,
+  municipio_id, unidade_id, cargo_id, role_sistema,
+  data_admissao, status_registro
+) values (
+  'SEU_UID_AQUI',
+  'DG-0001',
+  'Dr. ALEXANDRE FERNANDES CARDOSO',
+  'diretor.geral@sigmavertice.org',
+  (select id from public.municipios where codigo_ibge = '1302505'),
+  (select id from public.unidades where codigo = 'UNI-HQ-001'),
+  (select id from public.cargos where nome = 'Diretor Geral'),
+  'diretor_geral',
+  current_date,
+  'ativo'
+);
+```
+
+---
+
+## CONFIGURAR VARIÁVEIS NO PROJETO
+
+1. Abra o arquivo:
+   d:\0001\sigmavertice\.env.local
+
+2. No painel do Supabase → Project Settings (engrenagem) → API:
+   - Copie "Project URL"  → cole na linha NEXT_PUBLIC_SUPABASE_URL
+   - Copie "anon public"  → cole na linha NEXT_PUBLIC_SUPABASE_ANON_KEY
+   - Copie "service_role" → cole na linha SUPABASE_SERVICE_ROLE_KEY
+
+Pronto! Depois é só me avisar que eu rodo o deploy. 🚀

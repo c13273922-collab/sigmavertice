@@ -1,0 +1,190 @@
+================================================================================
+SIGMA VÉRTICE · PASSO 4 PUBLICAR NO AR - GITHUB + VERCEL + SUPERDOMÍNIOS
+================================================================================
+
+ANTES DE TUDO: garanta que no computador tem:
+ - Node.js LTS (versão 20 ou 22) instalado.
+   Para testar: abra Prompt PowerShell, digite node --version e enter.
+   Se aparecer a versão (ex: v22.7.0), está OK.
+   Se der erro "não reconhecido": instale o Node LTS de https://nodejs.org/pt-br/download
+ - Git instalado (para enviar código para o GitHub).
+   Para testar: digite git --version e enter.
+   Se der erro, baixe de https://git-scm.com/download/win (Next, Next, Next, Finish)
+
+================================================================================
+ETAPA 4A: CRIAR UM REPOSITORIO VAZIO NO GITHUB
+================================================================================
+
+1) Abra e logue no GitHub (tem conta? se não tiver, crie grátis):
+   https://github.com/
+
+2) Clique em seu perfil (canto sup dir) → Your repositories → botão verde [New]
+   Ou clique direto: https://github.com/new
+
+3) Preencha:
+   Repository name: sigmavertice
+   Description (opcional): Portal dos Funcionarios Sigma Vertice
+   Deixe marcado: Public
+   NÃO marque nada de "Initialize with README" (deixa desmarcado)
+   Clique no botão verde [Create repository]
+
+4) Você cai numa tela parecida com esta:
+   "... create a new repository on the command line ..."
+   "...or push an existing repository from the command line..."
+   
+   DEIXE ESSA TELA ABERTA. Agora vamos rodar o BAT do Passo 4B abaixo.
+
+================================================================================
+ETAPA 4B: ENVIAR CODIGO DO COMPUTADOR PARA O GITHUB (usar PASSO_4_ENVIA_GITHUB.bat)
+================================================================================
+
+→ No computador, abra a pasta: d:\0001\sigmavertice\
+→ Clique 2 vezes no arquivo: PASSO_4_ENVIA_GITHUB.bat
+→ Ele vai perguntar o seu USERNAME do GitHub (ex: ivanildojunior160698 ou o que você usa)
+→ Depois vai perguntar o NOME DO REPOSITORIO que você criou (provavelmente sigmavertice)
+→ Segue as instruções da tela.
+→ Quando terminar, volte na página do GitHub e atualize a página (F5). 
+   Você deve VER AS PASTAS src/, supabase/, arquivos .bat, package.json, etc.
+   Se aparecer tudo → GITHUB FEITO!
+
+================================================================================
+ETAPA 4C: PUBLICAR NA VERCEL (GRÁTIS, 100% OTIMIZADO PARA NEXT.JS)
+================================================================================
+
+1) Abra a Vercel e CADASTRE-SE LOGANDO COM A MESMA CONTA DO GITHUB:
+   https://vercel.com/signup
+   Escolha a opção "Hobby" (grátis, não precisa de cartão).
+
+2) Depois de logar na Vercel, clique em [Add New...] → Project
+   Ou entre direto: https://vercel.com/new
+
+3) A tela "Import Project" vai aparecer.
+   Do lado "Import Git Repository", ele lista SEU repositório sigmavertice.
+   Clique no botão azul [Import] ao lado de sigmavertice.
+
+4) Chegamos na página "Configure Project"
+   Não precisa mudar NADA no Framework (vem Next.js automatico).
+   No nome do projeto: pode deixar sigmavertice.
+
+   ⚠️ ABAIXO DE TUDO, TEM UMA SEÇÃO "Environment Variables".
+   É AQUI QUE VOCÊ VAI COLOCAR AS MESMAS 3 CHAVES QUE VOCÊ COPIOU.
+
+   Vamos adicionar 3 variáveis (clique em [Add] 3 vezes):
+
+   NOME 1:  NEXT_PUBLIC_SUPABASE_URL
+   VALOR:  (cole a Project URL, exatamente como copiou: https://swpoqlgsyfecpdwyjffv.supabase.co/)
+
+   NOME 2:  NEXT_PUBLIC_SUPABASE_ANON_KEY
+   VALOR:  (cole a Publishable key: sb_publishable_7pqqy9m5vCUqrEz-125hxA_nUiilMgX)
+
+   NOME 3:  SUPABASE_SERVICE_ROLE_KEY
+   VALOR:  (cole a Secret key: sb_secret_XQ7aaCaw2byoD70sy4G-lQ_ipuoWPZm)
+
+   Depois de adicionar as 3:
+   → CLIQUE NO BOTÃO AZUL [Deploy] no final da página.
+
+5) A tela vai ficar carregando por uns 60-90 segundos (barra de progresso).
+   Aguarde. No final, aparece a tela:
+   🎉 "Congratulations! Your project has been deployed."
+   E aparece um link tipo: https://sigmavertice-xxxxxxx.vercel.app
+   (Este é o link provisório, antes de apontar seu domínio sigmavertice.org)
+
+   Clique no botão azul [Continue to Dashboard].
+
+================================================================================
+ETAPA 4D: CONECTAR SEU DOMINIO sigmavertice.org NA VERCEL
+================================================================================
+
+1) No DASHBOARD DA VERCEL do projeto sigmavertice:
+   → Clique no menu superior: Settings
+   → Clique no menu esquerdo: Domains
+   → Digite: sigmavertice.org → clique no botão [Add]
+   → Digite também: www.sigmavertice.org → clique no botão [Add]
+
+2) A Vercel vai mostrar para cada domínio o STATUS "Invalid Configuration" (normal),
+   e ao lado o valor do registro DNS que VOCÊ PRECISA COLOCAR na SuperDomínios.
+
+   Para o domínio sigmavertice.org (sem o www):
+   → Vercel vai mostrar algo tipo:
+     Type: A
+     Name: @
+     Value: 76.76.21.21    (ou outro IP, use O QUE APARECER NA SUA TELA)
+
+   Para o domínio www.sigmavertice.org (com www):
+   → Vercel vai mostrar algo tipo:
+     Type: CNAME
+     Name: www
+     Value: cname.vercel-dns.com   (ou um tipo: vercel-dns.com, use o que está na sua tela)
+
+   ANOTE ESSES VALORES num bloco de notas temporario, VOCÊ VAI USAR AGORA.
+
+================================================================================
+ETAPA 4E: PAINEL SUPERDOMINIOS · DNS → APONTAR PARA VERCEL
+================================================================================
+
+1) Abra https://superdominios.com.br e faça login com sua conta.
+
+2) No painel do SuperDomínios, clique em "Meus produtos" ou "Gerenciar hospedagens"
+   até chegar na tela do domínio sigmavertice.org.
+   (É a mesma tela que você me mostrou no print, onde tem "Gerenciamento de DNS".)
+
+3) No menu ESQUERDO, clique em → Gerenciamento de DNS
+
+4) Você vai ver a LISTA DE REGISTROS DNS existentes.
+
+   PRIMEIRO: APAGUE registros ANTIGOS do tipo A e CNAME de @ e www,
+   se houver algum (pois eles apontavam para a hospedagem antiga).
+   Para apagar: no final de cada linha tem um ícone lixeira / excluir.
+   Apague APENAS os registros A (Name=@) e CNAME (Name=www).
+   Não apague registros de tipo MX (email), NS, TXT etc.
+
+5) DEPOIS, CLIQUE NO BOTÃO [Adicionar Registro] (ou equivalente):
+
+   PRIMEIRO REGISTRO (para o domínio principal):
+   Tipo:             A
+   Nome (Host):      @     (ou deixe em branco, se o painel aceitar)
+   Valor (Destino):  (cole o IP que a VERCEL mostrou, exemplo 76.76.21.21
+                      → USE O VALOR EXATO QUE ESTÁ NA SUA TELA DA VERCEL, nao use o exemplo)
+   TTL:              300 (ou deixe o padrão Automatic / 1 hora = 3600, tanto faz)
+   Clique em [Salvar Registro].
+
+   SEGUNDO REGISTRO (para o www):
+   Tipo:             CNAME
+   Nome (Host):      www
+   Valor (Destino):  (cole o valor CNAME da Vercel, exemplo: cname.vercel-dns.com
+                      → USE O QUE APARECE NA SUA TELA DA VERCEL, use exatamente)
+   Clique em [Salvar Registro].
+
+6) Salve tudo.
+
+================================================================================
+ETAPA 4F: AGUARDAR PROPAGACAO + VERIFICAR NA VERCEL
+================================================================================
+
+Aguarde pelo menos 10 a 30 minutos (as vezes até 2 horas).
+DNS demora para propagar na internet mundial.
+
+Voltar na VERCEL → Settings → Domains:
+Clique no botão Refresh ao lado de sigmavertice.org.
+
+Quando aparecer do lado de sigmavertice.org um ✅ VERDE e escrito "Valid Configuration":
+
+1) Clique nos 3 pontinhos ao lado de sigmavertice.org → Make Primary Domain.
+   (Isto faz com que seu site apareça sempre no endereço limpo sigmavertice.org,
+   e o www e o *.vercel.app redirecionem automaticamente para ele.)
+
+2) A Vercel automaticamente emite HTTPS (certificado SSL).
+   Depois de 1 a 3 minutos, digite no navegador:
+   👉 https://sigmavertice.org
+
+   Se abrir a tela de LOGIN do sistema SIGMA VÉRTICE (tela azul dourada),
+   LOGUE com o email do DG: c13273822@gmail.com  e a senha que você criou lá
+   no Supabase → Authentication → Users.
+
+Se chegar no Dashboard (Centro de Comando, Mapa AM, cards, etc)
+→ 🎉 PARABENS, SISTEMA NO AR, PUBLICADO NO SEU DOMINIO! 🎉
+
+================================================================================
+FIM DO GUIA. SUPORTE: Se qualquer tela ficar com "erro 500" ou "404" 
+ou nao carregar, manda print da tela que resolvemos.
+================================================================================

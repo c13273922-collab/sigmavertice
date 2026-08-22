@@ -1,0 +1,191 @@
+======================================================================
+ SIGMA VERTICE — 6 LINKS EXATOS PARA FICAR ONLINE (SEM DEMORA)
+ Executar NA ORDEM NUMERICA — de 1 a 6.
+ Em cada link, FAÇA APENAS o que esta escrito no item.
+======================================================================
+ Data: 22/08/2026
+======================================================================
+
+
+----------------------------------------------------------------------
+ LINK 1/6  —  CRIAR USUARIO DIRETOR GERAL (obrigatorio ANTES)
+----------------------------------------------------------------------
+   URL: https://supabase.com/dashboard/project/swpoqlgsyfecpdwyjffv/auth/users
+   - Clique em [Add user] → [Create new user]
+   - E-mail:      usuario.dg@sigmavertice.org   (ou o seu email real)
+   - Password:    crieUMA_senha_FORT3_aqui!     (anote ela)
+   - Desmarque "Auto-confirmar email" se estiver marcado
+   - Clique em [Create user]
+   - Volte na lista e copie o ID (UUID) do usuario que acabou de criar
+     (clica em cima → abre lateral → campo "User UID")
+   - Guarde esse ID, pois precisa no LINK 2/6.
+
+
+----------------------------------------------------------------------
+ LINK 2/6  —  RODAR SQL (MIGRATION + SEED + VINCULO DG)
+----------------------------------------------------------------------
+   URL: https://supabase.com/dashboard/project/swpoqlgsyfecpdwyjffv/sql/new
+   1) Abra no Bloco de Notas o arquivo
+         d:\0001\sigmavertice\supabase\migrations\001_schema_principal.sql
+      Selecione TUDO (Ctrl+A), Copie (Ctrl+C), Cole no editor SQL acima
+      e CLIQUE EM [RUN]. Aguarde terminar. Deve aparecer "Success" verde.
+   2) Depois, abra no Bloco de Notas o arquivo
+         d:\0001\sigmavertice\supabase\seed.sql
+      Copie TUDO e Cole NOVAMENTE no mesmo editor SQL (pode apagar o anterior)
+      CLIQUE EM [RUN]. Deve aparecer "Success" verde.
+   3) POR FIM, cole o SQL ABAIXO no mesmo editor SQL — mas ANTES,
+      TROQUE O TEXTO  COLE_AQUI_UUID_DO_USUARIO_DG  pelo UUID que voce
+      copiou no LINK 1/6. Depois clique em [RUN].
+      --------------------------
+      INSERT INTO public.funcionarios
+        (id, nome_completo, email, cargo_id, role_sistema, unidade_id,
+         status, cpf, matricula, telefone, data_admissao, endereco,
+         cidade_estado, created_at, updated_at)
+      VALUES
+        ('COLE_AQUI_UUID_DO_USUARIO_DG',
+         'Diretor Geral',
+         'usuario.dg@sigmavertice.org',
+         (SELECT id FROM cargos WHERE nome_cargo = 'Diretor Geral' LIMIT 1),
+         'diretor_geral',
+         (SELECT id FROM unidades WHERE sigla = 'HQ' LIMIT 1),
+         'ativo',
+         '00000000000',
+         'SV-DG-0001',
+         '(92) 90000-0000',
+         CURRENT_DATE,
+         'Av. Sete de Setembro, 1000',
+         'Manaus/AM',
+         NOW(), NOW())
+      ON CONFLICT (id) DO NOTHING;
+      --------------------------
+   Se tudo der verde, BANCO PRONTO.
+
+
+----------------------------------------------------------------------
+ LINK 3/6  —  COPIAR AS 3 CHAVES DO SUPABASE (precisa em 2 lugares)
+----------------------------------------------------------------------
+   URL: https://supabase.com/dashboard/project/swpoqlgsyfecpdwyjffv/settings/api
+   Copie da tela os 3 valores EXATOS abaixo e cole em 2 locais:
+      a) No arquivo LOCAL do seu PC:  d:\0001\sigmavertice\.env.local
+         (abra com Bloco de Notas e cole no lugar dos placeholders)
+      b) Guarde tambem no bloco de notas temporariamente — voce vai
+         colar as mesmas 3 na Vercel no LINK 5/6.
+   - Project URL:
+        NEXT_PUBLIC_SUPABASE_URL = https://swpoqlgsyfecpdwyjffv.supabase.co
+   - anon public:
+        NEXT_PUBLIC_SUPABASE_ANON_KEY = <cole aqui a anon>
+   - service_role secret:
+        SUPABASE_SERVICE_ROLE_KEY = <cole aqui a service_role>
+   (A service_role NAO vai para lugar nenhum publico, apenas servidores)
+
+
+----------------------------------------------------------------------
+ LINK 4/6  —  CRIAR CONTA VERCEL E IMPORTAR CODIGO DO GITHUB
+----------------------------------------------------------------------
+   URL 1: https://github.com/new   (cria repositorio VAZIO sigmavertice)
+   URL 2: Depois de criado, rode o BAT no seu PC:
+            d:\0001\sigmavertice\PASSO_RAPIDO_1_GITHUB.bat
+          Depois de finalizado, no GitHub o seu repositorio aparecera com
+          os arquivos do Sigma Vértice lá dentro.
+   URL 3: https://vercel.com/signup
+          Entrar com a conta do MESMO GitHub que voce usou acima.
+   URL 4: No painel da Vercel → [Add New] → [Project]
+          Em "Import Git Repository" → clique em IMPORT ao lado do
+          repositorio "sigmavertice".
+
+
+----------------------------------------------------------------------
+ LINK 5/6  —  CONFIGURAR VARIAVEIS NA VERCEL E FAZER O PRIMEIRO DEPLOY
+----------------------------------------------------------------------
+   (Voce esta na tela "Configure Project" da Vercel antes do Deploy)
+   Frameworks detectado: Next.js (deixe assim)
+   Build Command / Output / Install: TUDO padrao, nao mexa.
+
+   1) Role ateh a area ENVIRONMENT VARIABLES.
+   2) Crie EXATAMENTE estas 3 variaveis (marque os 3 ambientes:
+      Production, Preview, Development) e cole os valores do LINK 3/6:
+
+         NAME:                          VALUE:
+         ----------------------------------------------------------------
+         NEXT_PUBLIC_SUPABASE_URL       https://swpoqlgsyfecpdwyjffv.supabase.co
+         NEXT_PUBLIC_SUPABASE_ANON_KEY  <cole anon key do LINK 3/6>
+         SUPABASE_SERVICE_ROLE_KEY      <cole service_role do LINK 3/6>
+
+   3) Clique em [Add] para cada uma apos digitar.
+   4) Quando as 3 estiverem listadas, clique em [Deploy] azul bem grande
+   5) Aguarde 2 a 5 minutos. A Vercel mostra o progresso.
+      No final, aparecera uma tela verde "Congrats!".
+      Copie a URL que aparecer, tipo: https://sigmavertice-xxxx.vercel.app
+      Abra ela no navegador. DEVE aparecer a tela azul/dourada de login
+      do Sigma Vértice. Tente logar com o email e senha do DG (LINK 1).
+      Se entrar e aparecer o Dashboard, deploy FUNCIONANDO.
+      Se der erro de login, provavelmente voce esqueceu de rodar o
+      PASSO 2/6 (SQL migration + seed + vinculo funcionario DG).
+
+
+----------------------------------------------------------------------
+ LINK 6/6  —  CONECTAR SEU DOMINIO sigmavertice.org DA SUPERDOMINIOS
+----------------------------------------------------------------------
+   (Ainda no painel da Vercel, projeto Sigma Vertice)
+   1) Clique na aba [Settings] → menu lateral [Domains].
+   2) Clique em [Add Domain].
+   3) Digite:    sigmavertice.org      (sem www)   → [Add]
+   4) Clique em [Add Domain] novamente, digite:
+         www.sigmavertice.org                       → [Add]
+   5) Para CADA um dos dois dominios a Vercel mostrara os VALORES DNS
+      que voce precisa. Deixe essa tela ABERTA.
+
+   6) Abra em OUTRA ABA do navegador o painel da SuperDominios:
+         https://superdominios.com.br
+      Entre na sua area do cliente → Meus Dominios → sigmavertice.org
+      Procure a opcao: "Registros DNS", "Editar Zona DNS" ou "DNS".
+
+   7) DELETE ou EDITE os registros EXISTENTES do tipo A com nome @,
+      e do tipo CNAME com nome www, se houver (estacionamento etc.).
+   8) Crie DOIS NOVOS registros exatamente como a VERCEL mostrou para voce:
+
+      REGISTRO 1  (raiz sigmavertice.org)
+         Tipo de registro: A
+         Nome / Host:     @    (ou deixe em branco, depende do painel)
+         Valor / IP:      <cole o IP que a Vercel mostrou>
+                          (normalmente 76.76.21.21  — mas USE o da TELA)
+         TTL:             300 ou o minimo (5 minutos)
+
+      REGISTRO 2  (www.sigmavertice.org)
+         Tipo de registro: CNAME
+         Nome / Host:     www
+         Valor / Aponta:  <cole o CNAME que a Vercel mostrou>
+                          (normalmente cname.vercel-dns.com — USE o da TELA)
+         TTL:             300 ou o minimo (5 minutos)
+
+   9) Salve / Aplicar no painel da SuperDominios.
+
+  10) Espere 10 a 20 minutos. Va tomando um cafe.
+
+  11) Volte na Aba da Vercel (Settings → Domains). Ao lado de cada dominio
+      vai aparecer um botao [Refresh]. Clique em refresh de tempos em tempos
+      (a cada 2-3 minutos). Quando aparecer:
+        ✅ Valid Configuration   (verde)
+      Pronto, o DNS conectou.
+
+  12) No dominio sigmavertice.org (sem www), clique nos 3 pontinhos →
+      [Set as primary domain]. Isso faz com que quem entre em www seja
+      redirecionado automaticamente para o dominio principal.
+
+  13) Aguarde MAIS 2 a 5 minutos para o HTTPS (certificado SSL cadeado
+      verde) ser emitido automaticamente pela Vercel (Let's Encrypt).
+      Depois abra no navegador:
+          https://sigmavertice.org
+
+      Se aparecer a tela de login azul/dourado do Sigma Vértice com o
+      cadeado VERDE do lado esquerdo da barra de endereco:
+
+       *************************************************************
+       *               SIGMA VÉRTICE ESTÁ NO AR! 🎉               *
+       *               DOMÍNIO OFICIAL: sigmavertice.org          *
+       *************************************************************
+
+
+======================================================================
+ FIM DOS 6 PASSOS. QUALQUER ERRO VERMELHO, COPIE A MENSAGEM AQUI.
+======================================================================
