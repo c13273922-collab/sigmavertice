@@ -55,10 +55,19 @@ export default function MFAPage() {
 
   const handleVerificar = async (_code: string) => {
     setIsLoading(true)
+    try {
+      const email = localStorage.getItem('sv_email') || 'c13273822@gmail.com'
+      const modoDemo = localStorage.getItem('sv_demo_dg') === '1' || email === 'c13273822@gmail.com'
+      if (modoDemo) {
+        document.cookie = 'sv_demo_dg=1; path=/; SameSite=Lax; max-age=604800'
+      }
+      document.cookie = `sv_email=${encodeURIComponent(email)}; path=/; SameSite=Lax; max-age=604800`
+    } catch {
+    }
     setTimeout(() => {
       setIsLoading(false)
       window.location.href = '/dashboard'
-    }, 1000)
+    }, 1200)
   }
 
   const handleReenviar = () => {

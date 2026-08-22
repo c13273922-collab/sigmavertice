@@ -17,8 +17,24 @@ import {
   CheckCircle2,
   Calendar,
   Radio,
-  ChevronRight
+  ChevronRight,
+  FolderKanban,
 } from 'lucide-react'
+
+const ICONES_MAP: Record<string, any> = {
+  Users,
+  Wifi,
+  FileText,
+  Plane,
+  Bell,
+  Clock,
+  AlertTriangle,
+  CheckCircle2,
+  FolderKanban,
+  FileCheck,
+  UserCheck,
+  Radio,
+}
 
 const cardsConfig = [
   {
@@ -27,7 +43,7 @@ const cardsConfig = [
     valor: '2.847',
     variacao: '+12',
     variacaoPositiva: true,
-    icone: Users,
+    icone: 'Users',
     cor: 'from-blue-500 to-indigo-600',
     sombra: 'shadow-blue-500/20',
     detalhe: 'Ativos no sistema',
@@ -38,7 +54,7 @@ const cardsConfig = [
     valor: '1.423',
     variacao: '+8,3%',
     variacaoPositiva: true,
-    icone: Wifi,
+    icone: 'Wifi',
     cor: 'from-emerald-500 to-teal-600',
     sombra: 'shadow-emerald-500/20',
     detalhe: 'Sessões ativas',
@@ -49,7 +65,7 @@ const cardsConfig = [
     valor: '892',
     variacao: '+45',
     variacaoPositiva: true,
-    icone: FileText,
+    icone: 'FileText',
     cor: 'from-violet-500 to-purple-600',
     sombra: 'shadow-violet-500/20',
     detalhe: 'Em andamento',
@@ -60,7 +76,7 @@ const cardsConfig = [
     valor: '67',
     variacao: '-3',
     variacaoPositiva: false,
-    icone: Plane,
+    icone: 'Plane',
     cor: 'from-orange-500 to-amber-600',
     sombra: 'shadow-orange-500/20',
     detalhe: 'Em deslocamento',
@@ -71,7 +87,7 @@ const cardsConfig = [
     valor: '23',
     variacao: '+7',
     variacaoPositiva: false,
-    icone: Bell,
+    icone: 'Bell',
     cor: 'from-rose-500 to-red-600',
     sombra: 'shadow-rose-500/20',
     detalhe: 'Críticos: 5',
@@ -82,7 +98,7 @@ const cardsConfig = [
     valor: '41',
     variacao: '+12',
     variacaoPositiva: false,
-    icone: Clock,
+    icone: 'Clock',
     cor: 'from-sigma-dourado to-sigma-douradoEscuro',
     sombra: 'shadow-sigma-dourado/20',
     detalhe: 'Aguardando DG',
@@ -96,7 +112,7 @@ const atividades = [
     acao: 'aprovou o processo',
     complemento: 'Proc. 2026/0412 - Licença Viagem',
     horario: 'há 2 minutos',
-    icone: CheckCircle2,
+    icone: 'CheckCircle2',
     cor: 'text-emerald-500 bg-emerald-500/10',
   },
   {
@@ -105,7 +121,7 @@ const atividades = [
     acao: 'criou novo caso',
     complemento: 'Caso 0891 - Manaus Unidade Centro',
     horario: 'há 12 minutos',
-    icone: FolderKanban,
+    icone: 'FolderKanban',
     cor: 'text-blue-500 bg-blue-500/10',
   },
   {
@@ -114,7 +130,7 @@ const atividades = [
     acao: 'gerou alerta crítico',
     complemento: 'Servidor principal - uso CPU 94%',
     horario: 'há 25 minutos',
-    icone: AlertTriangle,
+    icone: 'AlertTriangle',
     cor: 'text-rose-500 bg-rose-500/10',
   },
   {
@@ -123,7 +139,7 @@ const atividades = [
     acao: 'iniciou viagem',
     complemento: 'Manaus → Tabatinga / Voo 4421',
     horario: 'há 1 hora',
-    icone: Plane,
+    icone: 'Plane',
     cor: 'text-orange-500 bg-orange-500/10',
   },
   {
@@ -132,7 +148,7 @@ const atividades = [
     acao: 'assinou digitalmente',
     complemento: 'Documento PORTARIA 037/2026',
     horario: 'há 2 horas',
-    icone: FileCheck,
+    icone: 'FileCheck',
     cor: 'text-violet-500 bg-violet-500/10',
   },
   {
@@ -141,7 +157,7 @@ const atividades = [
     acao: 'registrou presença',
     complemento: 'Unidade Norte - Plantão Noturno',
     horario: 'há 3 horas',
-    icone: UserCheck,
+    icone: 'UserCheck',
     cor: 'text-teal-500 bg-teal-500/10',
   },
   {
@@ -150,32 +166,10 @@ const atividades = [
     acao: 'nova mensagem',
     complemento: 'Comunicado interno sobre RH',
     horario: 'há 4 horas',
-    icone: Radio,
+    icone: 'Radio',
     cor: 'text-sigma-dourado bg-sigma-dourado/10',
   },
 ]
-
-function FolderKanban(props: any) {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      {...props}
-    >
-      <path d="M4 20h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.93a2 2 0 0 1-1.66-.9l-.82-1.2A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13c0 1.1.9 2 2 2Z" />
-      <path d="M8 10v4" />
-      <path d="M12 10v2" />
-      <path d="M16 10v6" />
-    </svg>
-  )
-}
 
 export default function DashboardPage() {
   return (
@@ -201,7 +195,7 @@ export default function DashboardPage() {
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-5">
         {cardsConfig.map((card, index) => {
-          const Icon = card.icone
+          const Icon = ICONES_MAP[card.icone] || Users
           return (
             <div
               key={card.id}
@@ -389,7 +383,7 @@ export default function DashboardPage() {
 
           <div className="flex-1 overflow-y-auto divide-y divide-gray-50">
             {atividades.map((atividade, index) => {
-              const Icon = atividade.icone
+              const Icon = ICONES_MAP[atividade.icone] || CheckCircle2
               return (
                 <div
                   key={atividade.id}

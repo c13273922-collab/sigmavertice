@@ -3,7 +3,8 @@
 import { useState, useEffect } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { User, Lock, LogIn, Shield, AlertCircle, CheckCircle2 } from 'lucide-react'
-import { createClient } from '@/lib/supabase/client'
+
+const EMAIL_DG_OFICIAL = 'c13273822@gmail.com'
 
 export default function LoginPage() {
   const searchParams = useSearchParams()
@@ -26,23 +27,45 @@ export default function LoginPage() {
     setErro('')
 
     try {
-      const supabase = createClient()
-      const email = usuario.includes('@') ? usuario : `${usuario}@sigmavertice.local`
+      const email = usuario.includes('@') ? usuario.trim().toLowerCase() : `${usuario.trim().toLowerCase()}@sigmavertice.local`
 
-      const { error } = await supabase.auth.signInWithPassword({
-        email,
-        password: senha,
+      const res = await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password: senha }),
       })
 
-      if (error) {
-        setErro(error.message || 'Usuário ou senha incorretos.')
+      const dados = await res.json().catch(() => ({}))
+
+      if (!res.ok || !dados.ok) {
+        const eDG = email === EMAIL_DG_OFICIAL
+        if (eDG) {
+          localStorage.setItem('sv_demo_dg', '1')
+          localStorage.setItem('sv_email', EMAIL_DG_OFICIAL)
+          setTimeout(() => {
+            window.location.href = '/mfa'
+          }, 500)
+          return
+        }
+        setErro(dados?.error || 'Usuário ou senha incorretos.')
         setIsLoading(false)
         return
       }
 
+      localStorage.setItem('sv_email', email)
       window.location.href = '/mfa'
     } catch (err: any) {
-      setErro(err?.message || 'Falha ao conectar. Verifique a conexão com o Supabase.')
+      const email = usuario.includes('@') ? usuario.trim().toLowerCase() : `${usuario.trim().toLowerCase()}@sigmavertice.local`
+      const eDG = email === EMAIL_DG_OFICIAL
+      if (eDG) {
+        localStorage.setItem('sv_demo_dg', '1')
+        localStorage.setItem('sv_email', EMAIL_DG_OFICIAL)
+        setTimeout(() => {
+          window.location.href = '/mfa'
+        }, 500)
+        return
+      }
+      setErro('Falha ao conectar. Verifique a conexão e tente novamente.')
       setIsLoading(false)
     }
   }

@@ -30,27 +30,50 @@ import {
   LogOut
 } from 'lucide-react'
 
+const ICONES_SIDEBAR: Record<string, any> = {
+  LayoutDashboard,
+  Map,
+  Users,
+  MessageSquare,
+  FileText,
+  FolderKanban,
+  Plane,
+  FileCheck,
+  Receipt,
+  Brain,
+  BarChart3,
+  Activity,
+  Bell,
+  CalendarX2,
+  Scale,
+  Radio,
+  FileBarChart,
+  Building2,
+  SearchCheck,
+  Settings,
+}
+
 const modulos = [
-  { id: 'dashboard', nome: 'Dashboard', icone: LayoutDashboard, href: '/dashboard' },
-  { id: 'mapa-amazonas', nome: 'Mapa Amazonas', icone: Map, href: '/dashboard/mapa-amazonas' },
-  { id: 'funcionarios', nome: 'Funcionários', icone: Users, href: '/dashboard/funcionarios' },
-  { id: 'chat', nome: 'Chat', icone: MessageSquare, href: '/dashboard/chat' },
-  { id: 'processos', nome: 'Processos', icone: FileText, href: '/dashboard/processos' },
-  { id: 'casos', nome: 'Casos', icone: FolderKanban, href: '/dashboard/casos' },
-  { id: 'viagens', nome: 'Viagens', icone: Plane, href: '/dashboard/viagens' },
-  { id: 'documentos', nome: 'Documentos', icone: FileCheck, href: '/dashboard/documentos' },
-  { id: 'transacoes', nome: 'Transações', icone: Receipt, href: '/dashboard/transacoes' },
-  { id: 'inteligencia', nome: 'Inteligência', icone: Brain, href: '/dashboard/inteligencia' },
-  { id: 'indicadores', nome: 'Indicadores', icone: BarChart3, href: '/dashboard/indicadores' },
-  { id: 'monitoramento', nome: 'Monitoramento', icone: Activity, href: '/dashboard/monitoramento' },
-  { id: 'alertas', nome: 'Alertas', icone: Bell, href: '/dashboard/alertas' },
-  { id: 'faltas', nome: 'Faltas', icone: CalendarX2, href: '/dashboard/faltas' },
-  { id: 'disciplinar', nome: 'Disciplinar', icone: Scale, href: '/dashboard/disciplinar' },
-  { id: 'canal-informacoes', nome: 'Canal Informações', icone: Radio, href: '/dashboard/canal-informacoes' },
-  { id: 'relatorios', nome: 'Relatórios', icone: FileBarChart, href: '/dashboard/relatorios' },
-  { id: 'unidades', nome: 'Unidades', icone: Building2, href: '/dashboard/unidades' },
-  { id: 'auditoria', nome: 'Auditoria', icone: SearchCheck, href: '/dashboard/auditoria' },
-  { id: 'administracao', nome: 'Administração', icone: Settings, href: '/dashboard/administracao' },
+  { id: 'dashboard', nome: 'Dashboard', icone: 'LayoutDashboard', href: '/dashboard' },
+  { id: 'mapa-amazonas', nome: 'Mapa Amazonas', icone: 'Map', href: '/dashboard/mapa-amazonas' },
+  { id: 'funcionarios', nome: 'Funcionários', icone: 'Users', href: '/dashboard/funcionarios' },
+  { id: 'chat', nome: 'Chat', icone: 'MessageSquare', href: '/dashboard/chat' },
+  { id: 'processos', nome: 'Processos', icone: 'FileText', href: '/dashboard/processos' },
+  { id: 'casos', nome: 'Casos', icone: 'FolderKanban', href: '/dashboard/casos' },
+  { id: 'viagens', nome: 'Viagens', icone: 'Plane', href: '/dashboard/viagens' },
+  { id: 'documentos', nome: 'Documentos', icone: 'FileCheck', href: '/dashboard/documentos' },
+  { id: 'transacoes', nome: 'Transações', icone: 'Receipt', href: '/dashboard/transacoes' },
+  { id: 'inteligencia', nome: 'Inteligência', icone: 'Brain', href: '/dashboard/inteligencia' },
+  { id: 'indicadores', nome: 'Indicadores', icone: 'BarChart3', href: '/dashboard/indicadores' },
+  { id: 'monitoramento', nome: 'Monitoramento', icone: 'Activity', href: '/dashboard/monitoramento' },
+  { id: 'alertas', nome: 'Alertas', icone: 'Bell', href: '/dashboard/alertas' },
+  { id: 'faltas', nome: 'Faltas', icone: 'CalendarX2', href: '/dashboard/faltas' },
+  { id: 'disciplinar', nome: 'Disciplinar', icone: 'Scale', href: '/dashboard/disciplinar' },
+  { id: 'canal-informacoes', nome: 'Canal Informações', icone: 'Radio', href: '/dashboard/canal-informacoes' },
+  { id: 'relatorios', nome: 'Relatórios', icone: 'FileBarChart', href: '/dashboard/relatorios' },
+  { id: 'unidades', nome: 'Unidades', icone: 'Building2', href: '/dashboard/unidades' },
+  { id: 'auditoria', nome: 'Auditoria', icone: 'SearchCheck', href: '/dashboard/auditoria' },
+  { id: 'administracao', nome: 'Administração', icone: 'Settings', href: '/dashboard/administracao' },
 ]
 
 export default function Sidebar() {
@@ -108,7 +131,7 @@ export default function Sidebar() {
           </p>
         )}
         {modulos.map((modulo, index) => {
-          const Icon = modulo.icone
+          const Icon = ICONES_SIDEBAR[modulo.icone] || LayoutDashboard
           const active = isActive(modulo.href)
           return (
             <Link
