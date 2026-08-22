@@ -1,5 +1,14 @@
+'use client'
+
 import { FolderKanban, Search, Filter, Plus, HandCoins, AlertTriangle, Clock, CheckCircle2, XCircle } from 'lucide-react'
 import Link from 'next/link'
+
+const ICONES_BADGE: Record<string, any> = {
+  AlertTriangle,
+  Clock,
+  CheckCircle2,
+  XCircle,
+}
 
 export default function CasosPage() {
   const casos = [
@@ -10,10 +19,10 @@ export default function CasosPage() {
   ]
 
   const badgeStatus = (s: string) => ({
-    aberto: { txt: 'Aberto', cls: 'bg-red-500/15 text-red-700', icone: AlertTriangle },
-    analise: { txt: 'Em análise', cls: 'bg-amber-500/15 text-amber-700', icone: Clock },
-    resolvido: { txt: 'Resolvido', cls: 'bg-emerald-500/15 text-emerald-700', icone: CheckCircle2 },
-    fechado: { txt: 'Fechado', cls: 'bg-slate-500/15 text-slate-700', icone: XCircle },
+    aberto: { txt: 'Aberto', cls: 'bg-red-500/15 text-red-700', icone: 'AlertTriangle' },
+    analise: { txt: 'Em análise', cls: 'bg-amber-500/15 text-amber-700', icone: 'Clock' },
+    resolvido: { txt: 'Resolvido', cls: 'bg-emerald-500/15 text-emerald-700', icone: 'CheckCircle2' },
+    fechado: { txt: 'Fechado', cls: 'bg-slate-500/15 text-slate-700', icone: 'XCircle' },
   }[s])
 
   return (
@@ -76,7 +85,7 @@ export default function CasosPage() {
             <tbody className="divide-y divide-sigma-azul/5">
               {casos.map((c, i) => {
                 const b = badgeStatus(c.status)
-                const Icon = b.icone
+                const Icon = ICONES_BADGE[b.icone] || AlertTriangle
                 return (
                   <tr key={c.protocolo} className="hover:bg-sigma-azul-50/40 transition-colors animate-fade-in-up" style={{ animationDelay: `${i * 0.05}s` }}>
                     <td className="px-4 py-3 font-mono text-xs font-bold text-sigma-douradoEscuro">{c.protocolo}</td>

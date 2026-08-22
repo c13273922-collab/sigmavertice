@@ -1,12 +1,21 @@
+'use client'
+
 import { FileText, Plus, Search, Filter, Clock, UserCheck, CircleDot, HandCoins, User } from 'lucide-react'
 import Link from 'next/link'
 
+const ICONES_STATUSES: Record<string, any> = {
+  CircleDot,
+  Clock,
+  UserCheck,
+  FileText,
+}
+
 export default function ProcessosPage() {
   const statuses = [
-    { label: 'Abertos', valor: 42, cor: 'bg-blue-500/15 text-blue-700', icone: CircleDot },
-    { label: 'Em análise', valor: 28, cor: 'bg-amber-500/15 text-amber-700', icone: Clock },
-    { label: 'Aguardando aprovação', valor: 11, cor: 'bg-purple-500/15 text-purple-700', icone: UserCheck },
-    { label: 'Concluídos (mês)', valor: 67, cor: 'bg-emerald-500/15 text-emerald-700', icone: FileText },
+    { label: 'Abertos', valor: 42, cor: 'bg-blue-500/15 text-blue-700', icone: 'CircleDot' },
+    { label: 'Em análise', valor: 28, cor: 'bg-amber-500/15 text-amber-700', icone: 'Clock' },
+    { label: 'Aguardando aprovação', valor: 11, cor: 'bg-purple-500/15 text-purple-700', icone: 'UserCheck' },
+    { label: 'Concluídos (mês)', valor: 67, cor: 'bg-emerald-500/15 text-emerald-700', icone: 'FileText' },
   ]
 
   const processos = [
@@ -44,7 +53,7 @@ export default function ProcessosPage() {
 
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         {statuses.map((s, i) => {
-          const Icon = s.icone
+          const Icon = ICONES_STATUSES[s.icone] || FileText
           return (
             <div key={s.label} className="rounded-xl border border-sigma-azul/10 bg-white p-4 shadow-sm animate-fade-in-up" style={{ animationDelay: `${i * 0.05}s` }}>
               <div className="flex items-center justify-between mb-2">

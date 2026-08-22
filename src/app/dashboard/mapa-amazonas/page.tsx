@@ -1,4 +1,13 @@
+'use client'
+
 import { Map, Pin, Users, Building2, FileText, AlertTriangle } from 'lucide-react'
+
+const ICONES_MAPA: Record<string, any> = {
+  Users,
+  Pin,
+  Building2,
+  Map,
+}
 
 export default function MapaAmazonasPage() {
   const municipiosChave = [
@@ -33,12 +42,12 @@ export default function MapaAmazonasPage() {
 
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         {[
-          { label: 'Funcionários', valor: '312', icone: Users, cor: 'text-sigma-azul' },
-          { label: 'Online agora', valor: '176', icone: Pin, cor: 'text-emerald-600' },
-          { label: 'Unidades', valor: '5', icone: Building2, cor: 'text-sigma-douradoEscuro' },
-          { label: 'Municípios cobertos', valor: '62', icone: Map, cor: 'text-sigma-azulEscuro' },
+          { label: 'Funcionários', valor: '312', icone: 'Users', cor: 'text-sigma-azul' },
+          { label: 'Online agora', valor: '176', icone: 'Pin', cor: 'text-emerald-600' },
+          { label: 'Unidades', valor: '5', icone: 'Building2', cor: 'text-sigma-douradoEscuro' },
+          { label: 'Municípios cobertos', valor: '62', icone: 'Map', cor: 'text-sigma-azulEscuro' },
         ].map((m, i) => {
-          const Icon = m.icone
+          const Icon = ICONES_MAPA[m.icone] || Users
           return (
             <div key={i} className="rounded-xl border border-sigma-azul/10 bg-white p-4 shadow-sm animate-fade-in-up" style={{ animationDelay: `${i * 0.05}s` }}>
               <div className="flex items-center justify-between mb-2">
